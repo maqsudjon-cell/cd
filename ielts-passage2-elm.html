@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IELTS Reading – Passage 2: Return of the Elm</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#f2ede4;--surface:#faf8f3;--surface2:#fff;--border:#ddd5c0;
+  --text:#1e1a12;--muted:#7a7060;--accent:#1a5c3a;--accent2:#c8860a;
+  --red:#b03020;--red-light:#fdecea;--green:#1a6b38;--green-light:#e4f4eb;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+header{background:var(--accent);color:#fff;padding:0 2rem;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;box-shadow:0 2px 12px rgba(0,0,0,0.2);}
+header h1{font-family:'Playfair Display',serif;font-size:1rem;letter-spacing:0.02em;}
+#timer-display{font-size:1.15rem;font-weight:700;font-variant-numeric:tabular-nums;background:rgba(255,255,255,0.15);padding:0.25rem 0.9rem;border-radius:6px;letter-spacing:0.1em;}
+#timer-display.warning{background:rgba(220,60,40,0.5);}
+.hdr-btns{display:flex;gap:0.5rem;align-items:center;}
+.btn-sm{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:0.3rem 0.9rem;border-radius:5px;font-size:0.8rem;font-weight:600;cursor:pointer;}
+.btn-sm:hover{background:rgba(255,255,255,0.28);}
+.btn-submit-hdr{background:var(--accent2);border:none;color:#fff;padding:0.35rem 1.1rem;border-radius:5px;font-size:0.85rem;font-weight:700;cursor:pointer;}
+.btn-submit-hdr:hover{background:#a06d08;}
+#progress-bar{height:3px;background:#c5bfb0;}
+#progress-fill{height:100%;background:var(--accent2);width:0%;transition:width 0.4s;}
+main{max-width:1280px;margin:0 auto;padding:1.5rem 1rem;display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+@media(max-width:860px){main{grid-template-columns:1fr;}}
+.panel{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:1.6rem;overflow-y:auto;max-height:calc(100vh - 52px - 3px - 3rem);}
+.panel h2{font-family:'Playfair Display',serif;font-size:1.2rem;margin-bottom:0.3rem;color:var(--accent);}
+.passage-subtitle{font-size:0.78rem;color:var(--muted);margin-bottom:1rem;padding-bottom:0.7rem;border-bottom:1px solid var(--border);font-style:italic;}
+.passage-text p{font-family:'Source Serif 4',serif;font-size:0.93rem;line-height:1.85;margin-bottom:0.9rem;color:var(--text);user-select:text;}
+.para-label{font-weight:700;color:var(--accent2);margin-right:0.5rem;}
+.q-section-title{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);margin:1.6rem 0 0.4rem;display:flex;align-items:center;gap:0.5rem;}
+.q-section-title::after{content:'';flex:1;height:1px;background:var(--border);}
+.q-section-title:first-child{margin-top:0;}
+.instruction{font-size:0.83rem;color:var(--muted);margin-bottom:1rem;line-height:1.55;background:#fef9ed;border-left:3px solid var(--accent2);padding:0.55rem 0.8rem;border-radius:0 5px 5px 0;}
+.q-item{margin-bottom:0.9rem;padding:0.85rem 1rem;border:1px solid var(--border);border-radius:7px;background:var(--surface);transition:border-color 0.2s;}
+.q-item:focus-within{border-color:var(--accent);}
+.q-num{font-size:0.7rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.3rem;}
+.q-text{font-size:0.88rem;line-height:1.55;margin-bottom:0.5rem;font-family:'Source Serif 4',serif;}
+.letter-group{display:flex;gap:0.4rem;flex-wrap:wrap;}
+.letter-btn{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);color:var(--text);font-size:0.82rem;font-weight:700;cursor:pointer;transition:all 0.15s;display:flex;align-items:center;justify-content:center;}
+.letter-btn:hover{border-color:var(--accent);color:var(--accent);}
+.letter-btn.selected{background:var(--accent);color:#fff;border-color:var(--accent);}
+.fill-wrap{font-size:0.88rem;font-family:'Source Serif 4',serif;line-height:2.2;display:flex;flex-wrap:wrap;align-items:baseline;gap:0 0.3rem;}
+.fill-input{display:inline-block;width:130px;border:none;border-bottom:2px solid #b5a98a;background:#faf8f3;font-family:'DM Sans',sans-serif;font-size:0.88rem;color:var(--text);padding:0.15rem 0.4rem;outline:none;border-radius:3px 3px 0 0;transition:border-color 0.2s,background 0.2s;vertical-align:baseline;}
+.fill-input:focus{border-color:var(--accent);background:#edf6f0;}
+.btn-submit-main{background:var(--accent);color:#fff;padding:0.65rem 2rem;font-size:0.95rem;border-radius:7px;border:none;cursor:pointer;font-weight:600;display:block;margin:2rem auto 0;}
+.btn-submit-main:hover{background:#134a2e;}
+#hl-toolbar{display:none;position:fixed;z-index:9999;background:#1c1c1c;border-radius:8px;padding:0.38rem 0.55rem;gap:0.3rem;align-items:center;box-shadow:0 6px 24px rgba(0,0,0,0.45);pointer-events:all;}
+#hl-toolbar.visible{display:flex;}
+.hl-cb{width:20px;height:20px;border-radius:50%;border:2px solid rgba(255,255,255,0.2);cursor:pointer;flex-shrink:0;transition:transform 0.12s,border-color 0.12s;}
+.hl-cb:hover{transform:scale(1.25);border-color:#fff;}
+.hl-cb.active{border-color:#fff;box-shadow:0 0 0 2px rgba(255,255,255,0.3);}
+.hl-sep{width:1px;height:16px;background:rgba(255,255,255,0.2);margin:0 0.1rem;}
+.hl-erase{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.22);color:#fff;cursor:pointer;font-size:0.74rem;padding:0.18rem 0.5rem;border-radius:4px;white-space:nowrap;font-family:'DM Sans',sans-serif;}
+.hl-erase:hover{background:rgba(220,60,40,0.35);}
+mark.hl{background:none;border-radius:2px;padding:0 1px;cursor:pointer;}
+mark.hl:hover{opacity:0.72;}
+mark.hl-y{background:#ffe066;}mark.hl-g{background:#a8f0b8;}mark.hl-b{background:#a8d8f0;}mark.hl-p{background:#f0a8d0;}
+#result-panel{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:300;align-items:center;justify-content:center;}
+#result-panel.show{display:flex;}
+.result-box{background:var(--surface2);border-radius:14px;padding:2rem 1.8rem;max-width:560px;width:93%;max-height:88vh;overflow-y:auto;box-shadow:0 24px 80px rgba(0,0,0,0.35);}
+.result-box h2{font-family:'Playfair Display',serif;color:var(--accent);font-size:1.4rem;margin-bottom:0.3rem;}
+.score-big{font-size:2.8rem;font-weight:700;color:var(--accent);line-height:1;}
+.score-sub{color:var(--muted);font-size:0.88rem;margin-bottom:1.2rem;}
+.result-row{display:flex;align-items:center;gap:0.6rem;padding:0.42rem 0;border-bottom:1px solid var(--border);font-size:0.84rem;}
+.result-row:last-child{border-bottom:none;}
+.rq{min-width:26px;font-weight:700;color:var(--muted);}
+.r-your{min-width:100px;}
+.r-correct{color:var(--green);font-weight:600;}
+.badge{display:inline-block;padding:0.12rem 0.45rem;border-radius:4px;font-size:0.72rem;font-weight:700;}
+.badge.ok{background:var(--green-light);color:var(--green);}
+.badge.no{background:var(--red-light);color:var(--red);}
+.close-result{margin-top:1.4rem;background:var(--accent);color:#fff;border:none;padding:0.55rem 1.5rem;border-radius:7px;cursor:pointer;font-weight:600;font-size:0.9rem;display:block;margin-left:auto;}
+</style>
+</head>
+<body>
+<header>
+  <h1>IELTS Reading – Passage 2: Return of the Elm</h1>
+  <div id="timer-display">20:00</div>
+  <div class="hdr-btns">
+    <button class="btn-sm" onclick="location.reload()">↺ Reset</button>
+    <button class="btn-submit-hdr" onclick="submitTest()">Submit</button>
+  </div>
+</header>
+<div id="progress-bar"><div id="progress-fill"></div></div>
+
+<main>
+  <!-- PASSAGE -->
+  <div class="panel" id="passage-panel">
+    <h2>Return of the Elm</h2>
+    <div class="passage-subtitle">Mark Rowe investigates attempts to reintroduce elms to Britain · Questions 14–26</div>
+    <div class="passage-text">
+      <p><span class="para-label">A</span>Around 25 million elms, accounting for 90% of all elm trees in the UK, died during the 1960s and '70s of Dutch elm disease. In the aftermath, the elm, once so dominant in the British landscape, was largely forgotten. However, there's now hope the elm may be reintroduced to the countryside of central and southern England. Any reintroduction will start from a very low base. "The impact of the disease is difficult to picture if you hadn't seen what was there before," says Matt Elliot of the Woodland Trust. "You look at old photographs from the 1960s and it's only then that you realise the impact [elms had]...They were significant, large trees...then they were gone."</p>
+      <p><span class="para-label">B</span>The disease is caused by a fungus that blocks the elms' vascular (water, nutrient and food transport) system, causing branches to wilt and die. A first epidemic, which occurred in the 1920s, gradually died down, but in the '70s a second epidemic was triggered by shipments of elm from Canada. The wood came in the form of logs destined for boat building and its intact bark was perfect for the elm bark beetles that spread the deadly fungus. This time, the beetles carried a much more virulent strain that destroyed the vast majority of British elms.</p>
+      <p><span class="para-label">C</span>Today, elms still exist in the southern English countryside but mostly only in low hedgerows between fields. "We have millions of small elms in hedgerows but they get targeted by the beetle as soon as they reach a certain size," says Karen Russell, co-author of the report 'Where we are with elm'. Once the trunk of the elm reaches 10–15 centimetres or so in diameter, it becomes a perfect size for beetles to lay eggs and for the fungus to take hold. Yet mature specimens have been identified, in counties such as Cambridgeshire, that are hundreds of years old, and have mysteriously escaped the epidemic.</p>
+      <p>The key, Russell says, is to identify and study those trees that have survived and work out why they stood tall when millions of others succumbed. Nevertheless, opportunities are limited as the number of these mature survivors is relatively small. "What are the reasons for their survival?" asks Russell. "Avoidance, tolerance, resistance? We don't know where the balance lies between the three. I don't see how it can be entirely down to luck."</p>
+      <p><span class="para-label">D</span>For centuries, elm ran a close second to oak as the hardwood tree of choice in Britain and was in many instances the most prominent tree in the landscape. Not only was elm common in European forests, it became a key component of birch, ash and hazel woodlands. The use of elm is thought to go back to the Bronze Age, when it was widely used for tools. Elm was also the preferred material for shields and early swords. In the 18th century, it was planted more widely and its wood was used for items such as storage crates and flooring. It was also suitable for items that experienced high levels of impact and was used to build the keel of the 19th-century sailing ship Cutty Sark as well as mining equipment.</p>
+      <p><span class="para-label">E</span>Given how ingrained elm is in British culture, it's unsurprising the tree has many advocates. Amongst them is Peter Bourne of the National Elm Collection in Brighton. "I saw Dutch elm disease unfold as a small boy," he says. "The elm seemed to be part of rural England, but I remember watching trees just lose their leaves and that really stayed with me." Today, the city of Brighton's elms total about 17,000. Local factors appear to have contributed to their survival. Strong winds from the sea make it difficult for the determined elm bark beetle to attack this coastal city's elm population. However, the situation is precarious. "The beetles can just march in if we're not careful, as the threat is right on our doorstep," says Bourne.</p>
+      <p><span class="para-label">F</span>Any prospect of the elm returning relies heavily on trees being either resistant to, or tolerant of, the disease. This means a widespread reintroduction would involve existing or new hybrid strains derived from resistant, generally non-native elm species. A new generation of seedlings have been bred and tested to see if they can withstand the fungus by cutting a small slit on the bark and injecting a tiny amount of the pathogen. "The effects are very quick," says Russell. "You return in four to six weeks and trees that are resistant show no symptoms, whereas those that are susceptible show leaf loss and may even have died completely."</p>
+      <p><span class="para-label">G</span>All of this raises questions of social acceptance, acknowledges Russell. "If we're putting elm back into the landscape, a small element of it is not native — are we bothered about that?" For her, the environmental case for reintroducing elm is strong. "They will host wildlife, which is a good thing." Others are more wary. "On the face of it, it seems like a good idea," says Elliot. The problem, he suggests, is that "You're replacing a native species with a horticultural analogue. You're effectively cloning." There's also the risk of introducing new diseases. Rather than plant new elms, the Woodland Trust emphasises providing space to those elms that have survived independently. "Sometimes the best thing you can do is just give nature time to recover... over time, you might get resistance," says Elliot.</p>
+    </div>
+  </div>
+
+  <!-- QUESTIONS -->
+  <div class="panel" id="questions-panel">
+    <div class="q-section-title">Questions 14–18 · Matching Paragraphs</div>
+    <div class="instruction">Reading Passage 2 has seven sections, <strong>A–G</strong>. Which section contains the following information? You may use any letter more than once.</div>
+
+    <div class="q-item"><div class="q-num">Q14</div><div class="q-text">Reference to the research problems that arise from there being only a few surviving large elms.</div>
+      <div class="letter-group" data-q="14"><button class="letter-btn" data-val="A">A</button><button class="letter-btn" data-val="B">B</button><button class="letter-btn" data-val="C">C</button><button class="letter-btn" data-val="D">D</button><button class="letter-btn" data-val="E">E</button><button class="letter-btn" data-val="F">F</button><button class="letter-btn" data-val="G">G</button></div></div>
+
+    <div class="q-item"><div class="q-num">Q15</div><div class="q-text">Details of a difference of opinion about the value of reintroducing elms to Britain.</div>
+      <div class="letter-group" data-q="15"><button class="letter-btn" data-val="A">A</button><button class="letter-btn" data-val="B">B</button><button class="letter-btn" data-val="C">C</button><button class="letter-btn" data-val="D">D</button><button class="letter-btn" data-val="E">E</button><button class="letter-btn" data-val="F">F</button><button class="letter-btn" data-val="G">G</button></div></div>
+
+    <div class="q-item"><div class="q-num">Q16</div><div class="q-text">Reference to how Dutch elm disease was brought into Britain.</div>
+      <div class="letter-group" data-q="16"><button class="letter-btn" data-val="A">A</button><button class="letter-btn" data-val="B">B</button><button class="letter-btn" data-val="C">C</button><button class="letter-btn" data-val="D">D</button><button class="letter-btn" data-val="E">E</button><button class="letter-btn" data-val="F">F</button><button class="letter-btn" data-val="G">G</button></div></div>
+
+    <div class="q-item"><div class="q-num">Q17</div><div class="q-text">A description of the conditions that have enabled a location in Britain to escape Dutch elm disease.</div>
+      <div class="letter-group" data-q="17"><button class="letter-btn" data-val="A">A</button><button class="letter-btn" data-val="B">B</button><button class="letter-btn" data-val="C">C</button><button class="letter-btn" data-val="D">D</button><button class="letter-btn" data-val="E">E</button><button class="letter-btn" data-val="F">F</button><button class="letter-btn" data-val="G">G</button></div></div>
+
+    <div class="q-item"><div class="q-num">Q18</div><div class="q-text">Reference to the stage at which young elms become vulnerable to Dutch elm disease.</div>
+      <div class="letter-group" data-q="18"><button class="letter-btn" data-val="A">A</button><button class="letter-btn" data-val="B">B</button><button class="letter-btn" data-val="C">C</button><button class="letter-btn" data-val="D">D</button><button class="letter-btn" data-val="E">E</button><button class="letter-btn" data-val="F">F</button><button class="letter-btn" data-val="G">G</button></div></div>
+
+    <div class="q-section-title">Questions 19–23 · Matching People</div>
+    <div class="instruction">Match each statement with the correct person:<br><strong>A. Matt Elliot &nbsp;·&nbsp; B. Karen Russell &nbsp;·&nbsp; C. Peter Bourne</strong><br>You may use any letter more than once.</div>
+
+    <div class="q-item"><div class="q-num">Q19</div><div class="q-text">If a tree gets infected with Dutch elm disease, the damage rapidly becomes visible.</div>
+      <div class="letter-group" data-q="19"><button class="letter-btn" data-val="A">A</button><button class="letter-btn" data-val="B">B</button><button class="letter-btn" data-val="C">C</button></div></div>
+
+    <div class="q-item"><div class="q-num">Q20</div><div class="q-text">It may be better to wait and see if the mature elms that have survived continue to flourish.</div>
+      <div class="letter-group" data-q="20"><button class="letter-btn" data-val="A">A</button><button class="letter-btn" data-val="B">B</button><button class="letter-btn" data-val="C">C</button></div></div>
+
+    <div class="q-item"><div class="q-num">Q21</div><div class="q-text">There must be an explanation for the survival of some mature elms.</div>
+      <div class="letter-group" data-q="21"><button class="letter-btn" data-val="A">A</button><button class="letter-btn" data-val="B">B</button><button class="letter-btn" data-val="C">C</button></div></div>
+
+    <div class="q-item"><div class="q-num">Q22</div><div class="q-text">We need to be aware that insects carrying Dutch elm disease are not very far away.</div>
+      <div class="letter-group" data-q="22"><button class="letter-btn" data-val="A">A</button><button class="letter-btn" data-val="B">B</button><button class="letter-btn" data-val="C">C</button></div></div>
+
+    <div class="q-item"><div class="q-num">Q23</div><div class="q-text">You understand the effect Dutch elm disease has had when you see evidence of how prominent the tree once was.</div>
+      <div class="letter-group" data-q="23"><button class="letter-btn" data-val="A">A</button><button class="letter-btn" data-val="B">B</button><button class="letter-btn" data-val="C">C</button></div></div>
+
+    <div class="q-section-title">Questions 24–26 · Complete the Summary</div>
+    <div class="instruction">Choose <strong>ONE WORD ONLY</strong> from the passage for each answer.</div>
+
+    <div class="q-item"><div class="q-num">Q24</div>
+      <div class="fill-wrap">For hundreds of years, the only tree more popular in Britain than elm was <input class="fill-input" data-q="24" type="text" placeholder="answer" autocomplete="off"/></div></div>
+
+    <div class="q-item"><div class="q-num">Q25</div>
+      <div class="fill-wrap">In the 18th century, elm wood was used for boxes and <input class="fill-input" data-q="25" type="text" placeholder="answer" autocomplete="off"/></div></div>
+
+    <div class="q-item"><div class="q-num">Q26</div>
+      <div class="fill-wrap">Due to its strength, the Cutty Sark's <input class="fill-input" data-q="26" type="text" placeholder="answer" autocomplete="off"/> was also constructed from elm</div></div>
+
+    <button class="btn-submit-main" onclick="submitTest()">Submit Answers</button>
+  </div>
+</main>
+
+<!-- Highlight toolbar -->
+<div id="hl-toolbar">
+  <button class="hl-cb active" data-c="hl-y" style="background:#ffe066"></button>
+  <button class="hl-cb" data-c="hl-g" style="background:#a8f0b8"></button>
+  <button class="hl-cb" data-c="hl-b" style="background:#a8d8f0"></button>
+  <button class="hl-cb" data-c="hl-p" style="background:#f0a8d0"></button>
+  <div class="hl-sep"></div>
+  <button class="hl-erase" id="hl-erase">✕ erase</button>
+</div>
+
+<!-- Results -->
+<div id="result-panel">
+  <div class="result-box">
+    <h2>Your Results</h2>
+    <div class="score-big" id="score-num">0/13</div>
+    <div class="score-sub" id="score-band">Estimated Band</div>
+    <div id="result-rows"></div>
+    <button class="close-result" onclick="document.getElementById('result-panel').classList.remove('show')">Close</button>
+  </div>
+</div>
+
+<script>
+const ANSWERS={14:'C',15:'G',16:'B',17:'E',18:'C',19:'B',20:'A',21:'B',22:'C',23:'A',24:'oak',25:'flooring',26:'keel'};
+const TOTAL=13;
+const userAnswers={};
+
+let timeLeft=20*60;
+const timerEl=document.getElementById('timer-display');
+const timerInt=setInterval(()=>{
+  timeLeft--;
+  timerEl.textContent=String(Math.floor(timeLeft/60)).padStart(2,'0')+':'+String(timeLeft%60).padStart(2,'0');
+  if(timeLeft<=120)timerEl.classList.add('warning');
+  if(timeLeft<=0){clearInterval(timerInt);submitTest();}
+  document.getElementById('progress-fill').style.width=(Object.keys(userAnswers).length/TOTAL*100)+'%';
+},1000);
+
+document.querySelectorAll('.letter-group').forEach(g=>{
+  g.querySelectorAll('.letter-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      g.querySelectorAll('.letter-btn').forEach(b=>b.classList.remove('selected'));
+      btn.classList.add('selected');
+      userAnswers[g.dataset.q]=btn.dataset.val;
+    });
+  });
+});
+
+document.querySelectorAll('.fill-input').forEach(inp=>{
+  inp.addEventListener('input',()=>{
+    if(inp.value.trim())userAnswers[inp.dataset.q]=inp.value.trim();
+    else delete userAnswers[inp.dataset.q];
+  });
+});
+
+function submitTest(){
+  clearInterval(timerInt);
+  let correct=0,rows='';
+  for(let q=14;q<=26;q++){
+    const ok=(userAnswers[q]||'').trim().toLowerCase()===ANSWERS[q].toLowerCase();
+    if(ok)correct++;
+    rows+=`<div class="result-row"><span class="rq">${q}</span><span class="r-your">${userAnswers[q]||'<em style="color:#aaa">—</em>'}</span><span class="r-correct">✓ ${ANSWERS[q]}</span><span class="badge ${ok?'ok':'no'}">${ok?'✓':'✗'}</span></div>`;
+  }
+  const band=correct>=12?'8.5–9.0':correct>=10?'7.5–8.0':correct>=8?'6.5–7.0':correct>=6?'6.0':'5.0–5.5';
+  document.getElementById('score-num').textContent=correct+'/'+TOTAL;
+  document.getElementById('score-band').textContent='Estimated Band: '+band;
+  document.getElementById('result-rows').innerHTML=rows;
+  document.getElementById('result-panel').classList.add('show');
+}
+
+// Highlight
+const hlT=document.getElementById('hl-toolbar'),passP=document.getElementById('passage-panel');
+const HLC=['hl-y','hl-g','hl-b','hl-p'];
+let hlColor='hl-y',hlRange=null,hlMark=null;
+hlT.addEventListener('mousedown',e=>e.preventDefault());
+hlT.querySelectorAll('.hl-cb').forEach(btn=>{
+  btn.addEventListener('click',e=>{
+    e.stopPropagation();
+    hlT.querySelectorAll('.hl-cb').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    hlColor=btn.dataset.c;
+    if(hlMark){HLC.forEach(c=>hlMark.classList.remove(c));hlMark.classList.add(hlColor);hlMark=null;hideHL();}
+    else if(hlRange){applyHL(hlRange,hlColor);hlRange=null;hideHL();}
+  });
+});
+document.getElementById('hl-erase').addEventListener('click',e=>{
+  e.stopPropagation();
+  if(hlMark){const p=hlMark.parentNode;while(hlMark.firstChild)p.insertBefore(hlMark.firstChild,hlMark);p.removeChild(hlMark);p.normalize();hlMark=null;}
+  else if(hlRange){eraseHL(hlRange);hlRange=null;}
+  hideHL();
+});
+function posHL(x,y){hlT.classList.add('visible');const tw=hlT.offsetWidth||220;hlT.style.left=Math.max(8,Math.min(x-tw/2,window.innerWidth-tw-8))+'px';hlT.style.top=(y+window.scrollY-54)+'px';}
+function hideHL(){hlT.classList.remove('visible');hlRange=null;hlMark=null;window.getSelection()?.removeAllRanges();}
+function attachMark(m){m.addEventListener('click',e=>{e.stopPropagation();hlMark=m;hlRange=null;const cur=HLC.find(c=>m.classList.contains(c));hlT.querySelectorAll('.hl-cb').forEach(b=>b.classList.toggle('active',b.dataset.c===cur));const r=m.getBoundingClientRect();posHL(r.left+r.width/2,r.top);});}
+document.addEventListener('mouseup',e=>{
+  if(hlT.contains(e.target)||e.target.tagName==='INPUT'||e.target.tagName==='BUTTON')return;
+  if(e.target.closest&&e.target.closest('.hl'))return;
+  setTimeout(()=>{
+    const sel=window.getSelection();
+    if(!sel||sel.isCollapsed||!sel.toString().trim()){hideHL();return;}
+    const range=sel.getRangeAt(0);
+    if(!passP.contains(range.commonAncestorContainer)){hideHL();return;}
+    hlMark=null;hlRange=range.cloneRange();
+    const rect=range.getBoundingClientRect();posHL(rect.left+rect.width/2,rect.top);
+  },10);
+});
+document.addEventListener('mousedown',e=>{
+  if(e.target.tagName==='INPUT')return;
+  if(hlT.contains(e.target))return;
+  if(e.target.closest&&e.target.closest('.hl'))return;
+  if(!passP.contains(e.target))hideHL();
+});
+function applyHL(range,cls){
+  try{
+    const frag=range.extractContents();
+    frag.querySelectorAll('.hl').forEach(m=>{while(m.firstChild)m.parentNode.insertBefore(m.firstChild,m);m.remove();});
+    const mark=document.createElement('mark');mark.className='hl '+cls;mark.appendChild(frag);
+    attachMark(mark);range.insertNode(mark);mark.parentNode.normalize();
+  }catch(e){}
+  window.getSelection()?.removeAllRanges();
+}
+function eraseHL(range){
+  try{
+    const frag=range.extractContents();
+    frag.querySelectorAll('.hl').forEach(m=>{while(m.firstChild)(m.parentNode||frag).insertBefore(m.firstChild,m);m.remove();});
+    range.insertNode(frag);
+  }catch(e){}
+  window.getSelection()?.removeAllRanges();
+}
+</script>
+</body>
+</html>
